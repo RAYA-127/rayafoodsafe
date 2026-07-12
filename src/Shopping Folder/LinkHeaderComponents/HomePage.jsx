@@ -17,8 +17,9 @@ export const HomePage = () => {
         <div className='Header-Container'>
             <div className='left-Side'> 
                 <div className='Title-Logo'>
-                    <img src='/raya.png' alt='Raya-Logo' />
-                    <h2>Raya Foods</h2>
+     <img src={process.env.PUBLIC_URL + '/raya.png'} alt='Raya-Logo' />git add .
+git commit -m "fix logo and all images"
+git push origin main                    <h2>Raya Foods</h2>
                 </div>
             </div>
 

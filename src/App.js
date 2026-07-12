@@ -1,6 +1,6 @@
 import './App.css';
 import { MainPage } from './Shopping Folder/MainPage/MainPage';
-import { CartProvider } from './Shopping Folder/AllComponents/UseContext/Cartcontext';
+import { CartProvider } from '../Shopping Folder/AllComponents/UseContext/Cartcontext';
 
 function App() {
   return (
