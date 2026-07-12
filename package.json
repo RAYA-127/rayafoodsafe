@@ -1,7 +1,7 @@
 {
   "name": "ecommerce",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "https://RAYA-127.github.io/rayafoodsafe",
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
