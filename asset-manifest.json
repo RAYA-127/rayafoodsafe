@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/rayafoodsafe/static/css/main.e17f61c3.css",
+    "main.js": "/rayafoodsafe/static/js/main.4ae9d1cd.js",
+    "static/media/food1.avif": "/rayafoodsafe/static/media/food1.b4f3a197fe5b4ce14f45.avif",
+    "index.html": "/rayafoodsafe/index.html",
+    "main.e17f61c3.css.map": "/rayafoodsafe/static/css/main.e17f61c3.css.map",
+    "main.4ae9d1cd.js.map": "/rayafoodsafe/static/js/main.4ae9d1cd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e17f61c3.css",
+    "static/js/main.4ae9d1cd.js"
+  ]
+}
