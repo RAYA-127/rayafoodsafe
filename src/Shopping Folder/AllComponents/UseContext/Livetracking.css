@@ -1,0 +1,120 @@
+/* Full page layout overlay reset */
+.tracking-page-overlay-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  z-index: 99999; /* Forces it over your home background elements */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.live-tracking-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.tracking-header-green {
+  background-color: #0c6941;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.back-nav-row {
+  position: absolute;
+  left: 20px;
+  top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.back-nav-row:hover { opacity: 1; }
+
+.tracking-header-green h2 {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.tracking-header-green h1 {
+  font-size: 22px;
+  margin: 6px 0;
+}
+
+.arrival-badge {
+  background-color: rgba(255, 255, 255, 0.15);
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.ontime-txt {
+  color: #59f0a2;
+  font-weight: bold;
+}
+
+.map-canvas-container {
+  flex: 1;
+  position: relative;
+  background-color: #f4f3f0;
+}
+
+/* Fallback Animated Graphic Interface */
+.map-route-graphic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.map-point {
+  background: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.restaurant-node { color: #ff5722; }
+.customer-node { color: #0c6941; }
+.node-lbl { font-size: 12px; color: #333; }
+
+.route-line-animated {
+  width: 4px;
+  height: 140px;
+  background: linear-gradient(to bottom, #ff5722, #0c6941);
+  position: relative;
+  border-radius: 2px;
+}
+
+.moving-car-icon {
+  position: absolute;
+  left: -10px;
+  font-size: 20px;
+  animation: carDrive 5s linear infinite;
+}
+
+@keyframes carDrive {
+  0% { top: 0%; }
+  100% { top: 90%; }
+}

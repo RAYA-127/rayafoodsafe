@@ -1,38 +1,1292 @@
-.App {
+
+body {
+  overflow-x: hidden;
+
+}
+* {
+  box-sizing: border-box;
+}
+
+
+
+
+/* ========================================================
+   2. MOBILE VIEW DESIGN (Screens below 768px)
+   ======================================================== */
+@media (max-width: 768px) {
+  
+  /* --- Top Fixed Header Configuration --- */
+  .Header-Container {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    z-index: 9999;
+    
+    /* Use flexbox to line up Logo, Cart,
+     and Sign In in a single horizontal row */
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Pushes the logo setup to take its natural space on the left */
+  .left-Side {
+    display: flex;
+    align-items: center;
+    margin-right: auto; 
+  }
+
+  /* Hide the search bar on mobile */
+  .Input-Field {
+    display: none !important;
+  }
+
+  /* --- Moving Cart & Sign-In buttons
+   to the top right --- */
+  /* Remove the old absolute/fixed bottom overrides
+   and pull them directly into 
+   the top row flexbox flow */
+  .Header-Container > a[href="/cart"],
+  .Header-Container > div:has(.Right-Side),
+  .Cart, 
+  .Right-Side {
+    /* Undo previous bottom positioning */
+    position: static !important; 
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* Bundle Cart and Sign In neatly
+  next to each other on the right side */
+  .Cart, .cart2 {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    font-size: 13px;
+    gap: 4px;
+  }
+
+  /* Add a tiny gap between the Cart
+   link and the Sign-In div wrapper */
+  .Header-Container > a[href="/cart"] {
+    margin-right: 8px;
+  }
+
+  /* --- Bottom Navigation Bar (Stays clean at
+  bottom like image_dca063.png) --- */
+  .Center-Side {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff; 
+    border-top: 1px solid #dddddd;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    padding: 10px 0;
+  }
+
+  /* Spreads the main tabs equally 
+along the bottom bar */
+  .Center-Side ul {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .Center-Side ul li {
+    flex: 1;
+    text-align: center;
+  }
+
+  .Center-Side ul li a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    text-decoration: none;
+  }
+
+
+  /* --- Page Scrolling Fixes --- */
+  /* Adds top padding for the products list so they aren't hidden underneath the fixed top header */
+  .list-items {
+    margin-top: 75px; 
+    margin-bottom: 10px; /* Keeps room for the bottom nav bar */
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0px px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .list-items::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .list-items ul {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px;
+  }
+
+}
+
+
+
+
+
+
+
+/*hamburger*/
+.hamburger {
+  width: 100%;
+}
+
+/*Header container*/
+.Header-Container {
+display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #ffffff;  
+}
+.left-Side .Title-Logo {
+    cursor: pointer;
+  }
+.Center-Side ul {
+display: flex;
+  list-style: none;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.list-items ul {
+ display: flex;
+  list-style: none;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+/*All list items*/
+.Center-Side ul li{
+  display: flex;
+   text-align: center;
+  align-items: center;
+  background-color: #d8d8d7;
+  box-shadow: 3px 3px 3px 2px rgb(153, 153, 153);
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  justify-content: center;
+  color:green;
+}
+.Center-Side ul li:hover {
+    background-color: rgb(13, 167, 13);
+  color:white;
+    transform: scale(1.2);
+  transition:  all 0.5s ease-in-out;
+}
+
+.Input-Field {
+    border-radius: 10px;
+    
+}
+.Input-Field input {
+    width:200px;
+    height:30px;
+    border-radius: 10px;
+}
+
+.Input-Field:hover {
+    transform: scale(1.0);
+    transition:  all 0.1 ease-in-out;
+}
+.search {
+  cursor:pointer;
+}
+.search:hover {
+    transform: scale(1.1);
+    transition:  all 0.7s ease-in-out;
+}
+.search2{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:5px;
+  color:green;
+}
+.search2:hover {
+      color: green;
+}
+
+.Right-Side {
+    cursor: pointer;
+    padding-right:60px;  
+}
+.Right-Side:hover {
+    color: rgb(7, 146, 30);
+}
+.Cart {
+    cursor: pointer;
+     padding-right:25px;
+     border-radius: 10px;
+     gap:10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+     width: 100px;
+     height: 40px;
+     padding-left: 24px;
+   background-color: #e9e9e9;
+  color: green;
+   border:1px solid rgb(194, 191, 191);
+    box-shadow: 3px 3px 3px 2px rgb(153, 153, 153);
+    text-decoration: none;
+
+}
+
+.cart2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:5px;
+    width: 100px;
+    padding-left: 10px;
+    border-radius: 10px;
+     height: 40px;
+  border-radius: 10px;
+   background-color: #e9e9e9;
+  color: green;
+   border:1px solid rgb(194, 191, 191);
+    box-shadow: 3px 3px 3px 2px rgb(153, 153, 153);
+    text-decoration: none;
+}
+.cart2:hover {
+    background-color: green;
+      color: rgb(238, 236, 236);
+     transform: scale(1.1);
+     color:white;
+    transition:  all 0.7s ease-in-out;
+    box-shadow: 3px 3px 3px 2px rgb(153, 153, 153);
+}
+.Cart:hover  {
+      background-color: green;
+      color: rgb(238, 236, 236);
+     transform: scale(1.1);
+     color:white;
+    transition:  all 0.7s ease-in-out;
+    box-shadow: 3px 3px 3px 2px rgb(153, 153, 153);
+}
+ 
+
+
+/* Title-Logo */
+
+.Title-Logo img {
+        border-radius: 50%;
+        width:50px;
+        height: 50px;
+}
+.Title-Logo {
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+.Title-Logo h2{ 
+margin:0;
+}
+
+
+
+
+
+
+
+/* ========================================================
+   2. MOBILE 2-COLUMN GRID VIEW (Applies below 768px)
+   ======================================================== */
+@media (max-width: 768px) {
+  
+  /* Turns the parent card container wrapper into a CSS grid */
+  .products-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* Force exactly two equal items per row */
+    gap: 12px !important;                             /* Clean spacing between the columns and rows */
+    padding: 10px 12px !important;                    /* Safe margin gaps for mobile side edges */
+    box-sizing: border-box;
+  }
+
+  /* Ensures your outer animation/link block takes up full grid column width space */
+  .products-container a,
+  .animate {
+    width: 100% !important;
+    display: block;
+  }
+
+  /* Adjusts the inner image card frame container space properties */
+  .image-container {
+    width: 100% !important;
+    margin: 0 !important;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Soft professional shadow border */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Keeps images perfectly square and scaling beautifully inside smaller mobile split grids */
+  .image-container img {
+    width: 100% !important;
+    height: 130px !important; /* Fixed height for image uniform balance per row block */
+    object-fit: cover !important; /* Prevents image stretching or skewing distortion */
+  }
+
+  /* Custom inner padding text configuration space for Name and Price details */
+  .image-container-details {
+    padding: 10px !important;
+    text-align: center;
+    background-color: #ffffff;
+  }
+
+  .image-container-details h3 {
+    font-size: 14px !important;
+    margin: 0 0 4px 0 !important;
+    color: #333333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Gracefully shortens super long food text strings with '...' */
+  }
+
+  .image-container-details {
+    font-size: 13px !important;
+    font-weight: bold;
+    color: #555555;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*  dosa container
+And all products container
+*/
+
+.dosa { 
+  display: flex;
+  gap: 40px;
+  margin-left: 20px;
+}
+
+.products-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding-left: 20px;
+}
+
+.image-container {
+  display: flex;
+ flex-direction: column;  /* Stack items vertically */
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #e4e7e7;
+}
+.image-container img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+
+}
+
+.header-container {
+  margin:20px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+    
+}
+.image-container img {
+    width:200px;
+    height:200px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+
+
+/* 
+.products-container:hover {
+    transform: scale(1.2)  ease-in-out;
+}
+.image-container:hover {
+    transform: scale(1.2)  ease-in-out;    
+} */
+ .image-container-details h3 {
+  white-space: pre-line;
+    list-style: none;
+ }
+
+ .animate:hover {
+    transform: scale(1.1);
+    transition:  all 0.7s ease-in-out;
+    cursor: pointer;
+ }
+
+
+
+.banner-container img {
+    width: 99%;
+    height: 150px;
+    margin-left: 7px;
+}
+
+/*list container*/
+.list-items ul {
+    display: flex;
+    gap:40px;
+    
+}
+.list-items{
+  color:rgb(2, 148, 2);
+}
+.dosa {
+  color: green !important;
+}
+.list-items ul li {
+    cursor: pointer;
+    list-style-type: none;
+    list-style:none;
+    color: green;
+    border-radius: 15px;
+    background-color: rgb(219, 219, 219);
+    padding: 0 20px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.list-items ul li:hover {
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+   transform: scale(1.03);
+   background-color: green;
+   color:white;
+      transition: all 0.9s ease-in-out;
+}
+
+
+
+/*image-container-details*/
+.image-container-details {
+    width: 95%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    text-align: center;
+    font-size: 15px;
+}
+.image-container-details h3 {
+font-size: 16px;
+}
+
+/*Dynamic Routing
+Product-Details class
+*/
+
+.product-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 50px;
+    background-color: #e3e6e3;
+    width:500px;
+    max-width: 100%;
+    height:auto;
+    margin: 50px auto;  
+    border-radius: 20px;
+    
+}
+.product-details img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+
+}
+.product-details h2{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.product-details p{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+.btn{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+  background-color: #f03d36; /* Red color, similar to image */
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+    
+}   
+.btn:hover {
+    transform: scale(1.1);
+    transition:  all 0.7s ease-in-out;
+  box-shadow: 3px 3px 2px 2px rgb(181, 182, 181);
+      background-color: green;
+
+}
+
+
+/*allfood-contaner*/
+
+/* Individual Menu Row Container */
+.allfoods-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   max-width: 850px;
+   height: 170px;
+   margin: 20px auto;
+   padding: 14px 14px;
+   background-color: #dadada;
+   border-radius: 20px;
+   cursor: pointer;
+}
+
+.allfoods-container:hover {
+  transform: scale(1.01);
+  transition:  all 0.6s ease-in-out;
+}
+
+.allfood-text-content {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   max-width: 70%;
+   text-align: left;
+}
+
+.food-title {
+   font-size: 18px;
+   font-weight: 600;
+   color: #282c3f;
+   margin: 0;
+}
+
+.food-price {
+   font-size: 15px;
+   font-weight: 500;
+   color: #3d4152;
+}
+
+.food-description {
+   font-size: 14px;
+   color: #7e808c;
+   line-height: 1.3;
+   margin-top: 8px;
+}
+
+.allfood-image-block {
+   position: relative;
+   width: 150px;
+   height: 120px;
+}
+
+.allfoods-images img {
+   width: 150px;
+   height: 110px;
+   object-fit: cover;
+   border-radius: 12px;
+}
+
+.btnclass {
+   position: absolute;
+   bottom: -10px;
+   left: 50%;
+   transform: translateX(-50%);
+}
+
+.btn2 {
+   width: 100px;
+   height: 36px;
+   background-color: #ffffff;
+   color: #60b246;
+   font-size: 14px;
+   font-weight: 700;
+   border: 1px solid #d4d5d9;
+   border-radius: 8px;
+   cursor: pointer;
+   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn2:hover {
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+   transform: scale(1.03);
+   color: white;
+}
+
+
+.cart-page-blurred {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Replace with your default background food image */
+  background-color: rgb(255, 255, 255);
+  background-size: cover;
+  background-position: center;
+  /* Adjust px value for more or less blur */
+  filter: blur(3px) brightness(0.7); 
+  transform: scale(1.1); /* Prevents white artifacts around screen edges */
+  z-index: -1; /* Pushes it completely behind everything */
+}
+
+
+.cart-section {
+ display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px;
+    background-color: rgb(211, 211, 211);
+ border-radius: 20px;
+  width: 80%;
+  margin: 20px auto; 
+}
+.cart-section img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.cart-section p {
+  text-align: left;
+  line-height: 1.6;
+}
+.cart-content {
+  flex: 1;
+}
+
+.cart-content p {
+  text-align: left;
+  line-height: 1.6;
+}
+.remove-button {
+    margin-top: 15px;
+  padding: 10px 16px;
+  background-color: #f03d36; /* Red color, similar to image */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.remove-button:hover {
+  background-color: #d92e28; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift effect */ 
+}
+
+
+
+/*Link to header components.
+1)Sign In Page.
+*/ 
+.full-signin-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+form {
+  background: rgba(255, 255, 255, 0.75); /* Semi-transparent white background */
+  backdrop-filter: blur(20px); /* Blurs the background image behind the card */
+  -webkit-backdrop-filter: blur(20px); /* Safari support */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border:2px solid rgb(209, 207, 207);
+  box-shadow: 0 4px 12px rgba(152, 156, 152, 0.18);
+  border-radius: 15px;
+  align-items: center;
+  height: 450px;
+  width: 100%;
+  margin:20px;
+  padding:30px;
+  gap:15px;
+}
+.form button {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  color:green;
+}
+.form input{
+  width:300px;
+  height:40px;
+  border:1px solid rgb(209, 207, 207);
+  border-radius: 5px;
+}
+.form input:hover{
+  border-color: green;
+}
+.form input:focus{
+  border-color: green;
+  outline: none;
+}
+form button {
+  font-size:16px;
+  width:100px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid rgb(156, 154, 154);
+  margin:15px;
+  align-items: center;
+  justify-content: center;
+   box-shadow: 3px 3px 2px 2px rgb(181, 182, 181);
+  background-color: rgb(236, 238, 236);
+  color:rgb(28, 153, 17);
+    border: 2px solid rgb(156, 154, 154);
+}
+form button:hover {
+  transform: scale(1.1);
+  transition:  all 0.7s ease-in-out;
+  box-shadow: 3px 3px 2px 2px rgb(181, 182, 181);
+  background-color: rgb(6, 175, 6);
+  color:rgb(215, 218, 215);
+  border: 2px solid rgb(156, 154, 154);
+}
+
+
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.input-icon {
+   position: absolute;
+   left: -20px;
+   top: 38%;
+   transform: translateY(-50%);
+   color: #7e808c;
+   font-size: 16px;
+   pointer-events: none;
+}
+
+
+
+
+
+/*Home-Page-container*/
+/*Home-Page-container*/
+.homepage-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+/* The magic layer that creates the full-screen blur effect */
+.blurred-bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./Shopping Folder/LinkHeaderComponents/food1.avif');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px) brightness(0.7);
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.food-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.food-image-wrapper {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.food-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.food-info {
+  padding: 12px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.food-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #282c3f;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.food-description {
+  font-size: 12px;
+  color: #7e808c;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.food-price {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3d4152;
+  margin: 0;
+}
+
+.add-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #60b246;
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #4a8f36;
+}
+
+.blurred-bg-layer {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-image: url('./Shopping Folder/LinkHeaderComponents/food1.avif');
+   background-size: cover;
+   background-position: center;
+   filter: blur(5px) brightness(0.7);
+   transform: scale(1.1);
+   z-index: -1;
+}
+
+
+
+/*Home-Page-container*/
+
+
+
+
+.homepage-image {
+   background-color: transparent;
+   width: 100%;
+   max-width: 900px;
+   margin: 20px auto;
+   padding: 10px;
+}
+/* The magic layer that creates the full-screen blur effect */
+.blurred-bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Replace with your default background food image */
+  background-image: url('./Shopping Folder/LinkHeaderComponents/food1.avif'); 
+  background-size: cover;
+  background-position: center;
+  /* Adjust px value for more or less blur */
+  filter: blur(3px) brightness(0.7); 
+  transform: scale(1.1); /* Prevents white artifacts around screen edges */
+  z-index: -1; /* Pushes it completely behind everything */
+}
+
+.item-name{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top:10px;
+}
+
+.btn2:hover {
+  background-color: #4a8f36;
+}
+
+.homepage-products{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 180px;
+  max-width: 1200px;
+  margin: 20px auto;
+  align-items: center;
+   background-color: #dadada;
+  margin-top:30px;
+  
+   padding: 14px 14px;
+   border-radius: 20px;
+   cursor: pointer;
+}
+.homepage-products:hover {
+  transform: scale(1.05);
+  transition:  all 0.6s ease-in-out;
+}
+
+
+
+.homepage-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  justify-content: center;
+  flex-direction: column;
+  width: 100px;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.home-page-image-block img {
+   width: 120px;
+   height: 120px;
+   border-radius: 20px;
+   object-fit: cover;
+}
+
+@media (max-width: 600px) {
+  .homepage-container {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px; 
+  height: 200px;
+    padding: 10px;
+}
+}
+
+
+
+/*Bonda and all items*/
+.header-container h2 {
+  color:rgb(236, 232, 232);
+}
+
+
+
+
+/*Menu Page*/
+
+.menupage-products{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 290px;
+  max-width: 1200px;
+    margin: 20px auto;
+  align-items: center;
+   background-color: #dadada;
+  margin-top:30px;
+  
+   padding: 14px 14px;
+   border-radius: 20px;
+   cursor: pointer;
+}
+
+.menupage-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  justify-content: center;
+  flex-direction: column;
+  width: 100px;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.menu-page-image-block img {
+   width: 220px;
+   height: 150px;
+   border-radius: 20px;
+   object-fit: cover;
+}
+@media (max-width: 600px) {
+  .menupage-container {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px; 
+  width:160px;
+  height: 200px;
+  padding: 10px;
+}
+.menu-page-image-block img {
+   width: 160px;
+   height: 160px;
+   border-radius: 20px;
+   object-fit: cover;
+}
+}
+.menu-page-image-block {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  padding-top:30px;
+  padding-top:45px;
+  margin-bottom:10px;
+}
+.menu-item-button {
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10px;
+   background-color: #fafafa;
+  color:rgb(1, 133, 1);
+  box-shadow: 2px 2px   rgb(226, 226, 226);
+  border:1px solid rgb(158, 158, 158);
+}
+
+.menu-item-button:hover {
+    background-color: #60b246;
+  color: white;
+  box-shadow: 2px 2px  rgb(226, 226, 226);
+  transform: scale(1.05);
+  border:1px solid rgb(158, 158, 158);
+  transition:  all 0.6s ease-in-out;
+
+} 
+
+/*back to home  button*/
+.back-btn {
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;  
+}
+.home-link-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin:20px;
+  text-decoration: none;
+}
+.home-div {
+  background-color: white;
+    
+  border-radius: 10px;
+    display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height:50px;
+  text-decoration: none;
+  padding: 10px;
+}
+.back-btn .home-span {
+  font-size: 16px;
 }
 
-.App-link {
-  color: #61dafb;
+
+
+
+
+
+
+/*Offers page*/
+.offers-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+.page-heading { color: #ffffff; margin-bottom: 30px; font-size: 28px; }
+.offers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.offer-card {
+  background: white; padding: 25px; border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: left; border: 1px solid #eee;
+}
+.offer-badge { background: #e74c3c; color: white; display: inline-block; padding: 4px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; margin-bottom: 10px; }
+.coupon-code { background: #f4f6f7; border: 1px dashed #bdc3c7; padding: 8px; text-align: center; font-weight: bold; margin: 15px 0; color: #2c3e50; border-radius: 6px; }
+
+
+
+
+
+
+/*Help page*/
+.help-container {
+   max-width: 750px;
+    margin: 40px auto;
+     padding: 20px;
+   }
+.faq-section {
+   background: white;
+    padding: 25px;
+     border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+  }
+.faq-box {
+   border-bottom: 1px solid #f0f0f0;
+    padding: 15px 0;
+   }
+.faq-box:last-child { 
+  border-bottom: none;
+ }
+.faq-box h4 { 
+  color: #2c3e50;
+   margin-bottom: 8px;
+   }
+.faq-box p {
+   color: #7f8c8d; 
+   font-size: 14px;
+    line-height: 1.5; 
+  }
+.contact-support {
+   background: #fdfefe;
+    margin-top: 25px;
+     text-align: center;
+     padding: 20px; 
+    border-radius: 12px; 
+    border: 1px solid #e2e8f0; 
+  }
+
+
+
+
+  /*Profile Page*/
+.profile-container {
+   max-width: 900px;
+    margin: 40px auto; 
+    display: flex;
+     gap: 30px;
+      padding: 20px;
+     }
+.profile-sidebar { 
+  background: white; 
+  padding: 30px; 
+  border-radius: 12px; 
+  text-align: center; 
+  flex: 1; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+  height: fit-content; 
+}
+.profile-avatar { 
+  color: #bdc3c7; 
+  margin-bottom: 15px;
+ }
+.email-text { 
+  color: #7f8c8d; 
+  margin-bottom: 20px; 
+  font-size: 14px; 
+}
+.logout-btn { 
+  background: #e74c3c; 
+  color: white; 
+  border: none; 
+  padding: 8px 20px; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  font-weight: bold; 
+  width: 100%; 
+}
+.profile-content { 
+  flex: 2; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
+.info-card { 
+  background: white; 
+  padding: 25px; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+}
+.info-card h3 { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  border-bottom: 1px solid #f0f0f0; 
+  padding-bottom: 10px; margin-bottom: 15px; 
+  color: #2c3e50; 
+}
+.recent-order-item { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 12px 0; 
+  border-bottom: 1px solid #f9f9f9; 
+}
+.order-date { 
+  font-size: 12px; 
+  color: #95a5a6; 
+}
+.status-badge { 
+  background: #2ecc71;
+  color: white; 
+  font-size: 12px; 
+  padding: 4px 10px; 
+  border-radius: 20px; 
+  font-weight: 500; 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
+
+ 
