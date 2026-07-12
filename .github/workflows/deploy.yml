@@ -20,17 +20,12 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: './ecommerce/package-lock.json'
 
       - name: Install dependencies
-        run: |
-          cd ecommerce
-          npm install
+        run: npm install
 
       - name: Build project
-        run: |
-          cd ecommerce
-          npm run build
+        run: npm run build
         env:
           CI: false
 
@@ -38,5 +33,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ecommerce/build
+          publish_dir: ./build
           publish_branch: gh-pages
