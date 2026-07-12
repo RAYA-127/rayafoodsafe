@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "./static/css/main.b6566690.css",
-    "main.js": "./static/js/main.1b8e51bf.js",
-    "static/media/food1.avif": "./static/media/food1.b4f3a197fe5b4ce14f45.avif",
-    "index.html": "./index.html",
-    "main.b6566690.css.map": "./static/css/main.b6566690.css.map",
-    "main.1b8e51bf.js.map": "./static/js/main.1b8e51bf.js.map"
+    "main.css": "/rayafoodsafe/static/css/main.45a88513.css",
+    "main.js": "/rayafoodsafe/static/js/main.1b8e51bf.js",
+    "static/media/food1.avif": "/rayafoodsafe/static/media/food1.b4f3a197fe5b4ce14f45.avif",
+    "index.html": "/rayafoodsafe/index.html",
+    "main.45a88513.css.map": "/rayafoodsafe/static/css/main.45a88513.css.map",
+    "main.1b8e51bf.js.map": "/rayafoodsafe/static/js/main.1b8e51bf.js.map"
   },
   "entrypoints": [
-    "static/css/main.b6566690.css",
+    "static/css/main.45a88513.css",
     "static/js/main.1b8e51bf.js"
   ]
 }
