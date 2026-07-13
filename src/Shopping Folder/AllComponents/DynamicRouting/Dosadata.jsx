@@ -73,7 +73,7 @@ const Dosadata = () => {
           })}
         </div>
       </div>
-      <RatingSystem foodName={found.name} />
+      <RatingSystem foodName={found.namenp} />
     </>
   )
 }
