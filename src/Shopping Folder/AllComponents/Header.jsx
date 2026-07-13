@@ -19,7 +19,7 @@ export const Header = () => {
                <Link to="/Home">
                 <div className='Title-Logo'>
                     {/* ✅ FIXED: use process.env.PUBLIC_URL so logo loads on GitHub Pages */}
-                    <img src={process.env.PUBLIC_URL + '/raya.png'} alt='Raya-Logo' />
+                    <img src={process.env.PUBLIC_URL + '/rayaaa.png'} alt='Raya-Logo' />
                      <h2>Raya Foods</h2>
                 </div>
                 </Link>
