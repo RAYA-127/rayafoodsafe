@@ -89,7 +89,6 @@
 /* ── Stars ─────────────────────────────────────────────────── */
 .star-picker {
   display: flex;
-  gap: 6px;
   margin-top: 4px;
   justify-content: center;
 }
@@ -368,4 +367,78 @@
 }
 .rating-section-title {
   color:white;
+}
+
+
+
+
+/*Only for starts*/
+
+/* Container holding the 5 star buttons */
+.star-picker {
+  display: flex;
+  gap: 10px; /* Perfect spacing between cards */
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto;
+  width: 100%;
+  max-width: 320px; /* Keeps the entire star group perfectly contained and centered */
+  box-sizing: border-box;
+}
+
+/* Individual star button styling */
+.star-btn {
+  background: #f5f5f5; /* Light grey card background */
+  border: 1.5px solid #e2e2e2; /* Card border */
+  border-radius: 8px; /* Neat rounded corners */
+  
+  /* FIXED: No more wide hardcoded horizontal padding! */
+  padding: 5px 15px; 
+  flex: 1; /* Automatically scales to fit the available space evenly */
+  max-width: 50px; /* Prevents them from getting too huge on laptops */
+  
+  font-size: 18px; /* Adjusted star size so it fits inside any card width */
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Soft card drop shadow */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  outline: none;
+
+  /* Star Symbol Border Styling */
+  color: #e0e0e0; 
+  -webkit-text-stroke: 1.5px #888888; 
+}
+
+/* Hover effect */
+.star-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+  border-color: #ffb300;
+}
+
+/* Filled / Active State */
+.star-btn.filled {
+  background: #fffdf0;
+  border-color: #ffb300;
+  color: #ffb300;
+  -webkit-text-stroke: 1.5px #d48f00;
+}
+
+/* ── Mobile View Responsiveness ── */
+@media (max-width: 500px) {
+  .star-picker {
+    gap: 5px; /* Even tighter gap for small screens */
+    margin: 10px 0;
+  }
+
+  .star-btn {
+    padding:2px 7px; /* Shrinks the card width to fit mobile screens perfectly */
+    font-size: 16px; /* Slightly smaller star size so they don't crowd */
+    border-radius: 6px; /* Slightly smaller rounded corners to match the smaller card scale */
+  }
 }
