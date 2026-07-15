@@ -174,4 +174,4 @@ export const CartProvider = ({ children }) => {
 };
 
 export const useCart = () =>
-   useContext(CartContext);
+   useContext(CartContext); 
