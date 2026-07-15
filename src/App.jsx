@@ -33,6 +33,8 @@ import { Profile } from './Shopping Folder/LinkHeaderComponents/Profile'
 // Live Tracking
 import OderTracking from './Shopping Folder/AllComponents/UseContext/OderTracking'
 
+import AdminDashboard from './Shopping Folder/AllComponents/UseContext/AdminDashboard/AdminDashboard';
+
 // Layout wrapper — shows Header + child page
 const WithHeader = ({ children }) => (
   <div>
@@ -78,6 +80,8 @@ const App = () => {
             <Route path='/Offers'       element={<WithHeader><Offers /></WithHeader>} />
             <Route path='/Help'         element={<WithHeader><Help /></WithHeader>} />
             <Route path='/Profile'      element={<WithHeader><Profile /></WithHeader>} />
+
+            <Route path="/admin" element={<AdminDashboard />} />
 
           </Routes>
         </HashRouter>
