@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import { bondData } from '../../datas/bonda'
 import {allFoods} from '../../datas/allFoods'
 import { useCart } from '../UseContext/CartContext'
+import RatingSystem from '../RatingSystem'
+
 
 
 export const Bondadata = () => {
@@ -68,6 +70,8 @@ export const Bondadata = () => {
         
             ) })}
 </div>
+      <RatingSystem foodName={Data.name} />
+
 </>
   )
 }

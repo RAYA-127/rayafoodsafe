@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import { ChapData } from '../../datas/chapathi'
 import { allFoods } from '../../datas/allFoods'
 import { useCart } from '../UseContext/CartContext'
+import RatingSystem from '../RatingSystem'
+
 
 
 const Chapathidata = () => {
@@ -79,6 +81,8 @@ const Chapathidata = () => {
         
             ) })}
 </div>
+
+      <RatingSystem foodName={Data.name} />
 
     </>
   )

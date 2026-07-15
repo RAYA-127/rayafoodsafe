@@ -219,7 +219,7 @@ const RatingSystem = ({ foodName = 'This item' }) => {
         <div className='reviews-list'>
           <h3 className='rating-section-title'>
             Customer Reviews
-            <span style={{ fontSize:'12px', color:'#888', fontWeight:'400', marginLeft:'8px' }}>
+            <span style={{ fontSize:'12px', color:'#ffffffff', fontWeight:'400', marginLeft:'8px'}}>
               (Live — updates for all users)
             </span>
           </h3>

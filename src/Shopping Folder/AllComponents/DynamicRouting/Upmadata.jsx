@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import { upData } from '../../datas/upma'
 import { allFoods } from '../../datas/allFoods'
 import { useCart } from '../UseContext/CartContext'
+import RatingSystem from '../RatingSystem'
+
 
 
 
@@ -81,6 +83,7 @@ const Upmadata = () => {
         
             ) })}
 </div>
+      <RatingSystem foodName={Data.name} />
 
 
         </>

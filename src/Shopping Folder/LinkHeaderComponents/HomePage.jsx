@@ -18,7 +18,7 @@ export const HomePage = () => {
             <div className='left-Side'> 
                 <div className='Title-Logo'>
      <img src={process.env.PUBLIC_URL + '/rayaaa.png'} alt='Raya-Logo' />
-                    <h2>Raya Foods</h2>
+                    <h2>RayaFoods</h2>
                 </div>
             </div>
 

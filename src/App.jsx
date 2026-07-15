@@ -53,7 +53,7 @@ const App = () => {
             <Route path='/Sign In'      element={<SigninPage />} />
             <Route path='/track-order'  element={<OderTracking />} />
             <Route path='/Home'         element={<HomePage />} />
-
+           
             {/* Root redirect → Menu */}
             <Route path='/' element={<Navigate to='/Menu' replace />} />
 
@@ -75,7 +75,7 @@ const App = () => {
             <Route path='/Upma/:id'     element={<WithHeader><Upmadata /></WithHeader>} />
 
             {/* Cart & header links */}
-            <Route path='/cart'         element={<WithHeader><CartPage /></WithHeader>} />
+             <Route path='/cart'         element={<WithHeader><CartPage /></WithHeader>} />
             <Route path='/Offers'       element={<WithHeader><Offers /></WithHeader>} />
             <Route path='/Help'         element={<WithHeader><Help /></WithHeader>} />
             <Route path='/Profile'      element={<WithHeader><Profile /></WithHeader>} />

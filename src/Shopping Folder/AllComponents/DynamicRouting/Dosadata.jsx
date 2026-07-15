@@ -47,7 +47,7 @@ const Dosadata = () => {
                 {/* Left Side: Text and Details Content */}
                 <div className="allfood-text-content">
                   <h3 className="food-title">{food.name}</h3>
-                  <span className="food-price">Price : ₹{food.price}</span>
+                  <span className="food-price">Price : {food.price}</span>
                   <p className="food-description">{food.description}</p>
                   <span>🕒 20-30 mins</span> 
                 </div>
@@ -73,7 +73,7 @@ const Dosadata = () => {
           })}
         </div>
       </div>
-      <RatingSystem foodName={found.namenp} />
+      <RatingSystem foodName={found.name} />
     </>
   )
 }

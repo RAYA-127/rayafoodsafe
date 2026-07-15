@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import { idlyData } from '../../datas/idly'
 import { allFoods } from '../../datas/allFoods'
 import { useCart } from '../UseContext/CartContext'
+import RatingSystem from '../RatingSystem'
+
 
 
 const Idlidata = () => {
@@ -81,6 +83,7 @@ const Idlidata = () => {
         
             ) })}
 </div>
+      <RatingSystem foodName={Data.name} />
 
     </>
   )
