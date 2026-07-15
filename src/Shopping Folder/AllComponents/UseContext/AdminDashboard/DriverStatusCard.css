@@ -1,0 +1,134 @@
+.status-card-waiting {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #64748b;
+  margin-top: 15px;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #2ea865;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.driver-status-card-container {
+  background: #ffffff;
+  border: 1.5px solid #2ea865;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(46, 168, 101, 0.1);
+  font-family: inherit;
+}
+
+.card-header-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #2ea865;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.bike-icon {
+  animation: bounce 1.5s infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
+}
+
+.driver-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.driver-avatar {
+  width: 44px;
+  height: 44px;
+  background: #e6f7ed;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2ea865;
+}
+
+.driver-meta h4 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.delivery-time {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #d97706;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.contact-action-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.phone-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-display span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.phone-display strong {
+  font-size: 15px;
+  color: #334155;
+}
+
+.dial-button-link {
+  background-color: #2ea865;
+  color: white !important;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 18px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 6px rgba(46, 168, 101, 0.3);
+}
+
+.dial-button-link:hover {
+  background-color: #23834e;
+}

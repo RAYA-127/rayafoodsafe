@@ -5,6 +5,10 @@ import { FaUser, FaWallet, FaPlus, FaMinus, FaMapMarkerAlt } from 'react-icons/f
 import emailjs from '@emailjs/browser'; 
 import './CartPage.css';
 import './Livetracking.css';
+
+import DriverStatusCard from './AdminDashboard/DriverStatusCard';
+
+
 // Strip out your old local useState tracking declaration and pull everything from context:
 const CartPage = () => {
   const { 
@@ -298,6 +302,36 @@ const CartPage = () => {
         </div>
 
       </div>
+
+      {/* Inside CartPage.jsx, under your payment step details block: */}
+{placedOrderCoordinates && (
+  <div className="track-action-container" style={{ marginTop: '15px' }}>
+
+    {/* 👈 Drop the new DriverStatusCard here! */}
+    <DriverStatusCard orderId={placedOrderCoordinates.orderId} />
+
+    <button 
+      className="buy-now-btn" 
+      onClick={handleTrackOrderRedirect}
+      style={{ 
+        backgroundColor: '#0c6941', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        gap: '4px',
+        padding: '10px 15px',
+        height: 'auto',
+        marginTop: '10px'
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <FaMapMarkerAlt /> Track Order Live
+      </div>
+    </button>
+  </div>
+)}
+      
     </div>
   );
 };
