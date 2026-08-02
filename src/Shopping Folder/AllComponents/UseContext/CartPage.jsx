@@ -11,12 +11,15 @@ const CartPage = () => {
   const { cart, addToCart, removeFromCart, user, clearCart } = useCart();
   const navigate = useNavigate(); 
 
-  // ── Multiple orders stored as array — persists in localStorage ──
+  // Multiple orders stored as array 
+  // persists in localStorage 
   const [activeOrders, setActiveOrders] = useState(() => {
     try {
       const saved = localStorage.getItem('raya_active_orders');
       return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
+    } catch { 
+      return [];
+    } //return empty array if any error occurs while fetching
   });
 
   const baseWebUrl = "https://script.google.com/macros/s/AKfycbzuNOEQ1PfE2ISH_yi_09QFtCmrWgaVa4d9HG3A0NniNKj8FvFD7xBaSajCuM6W7FS2/exec";
@@ -42,17 +45,23 @@ const CartPage = () => {
     return n;
   };
 
-  const itemTotal   = cart.reduce((sum, item) => sum + getCleanPrice(item) * (item.quantity || 1), 0);
+  const itemTotal   = cart.reduce((sum, item) => 
+    sum + getCleanPrice(item) * (item.quantity || 1), 0);
   const deliveryFee = cart.length > 0 ? 5 : 0;
   const toPay       = itemTotal + deliveryFee;
 
   // ── Place Order ──────────────────────────────────────────────
   const handlePlaceOrder = () => {
-    if (cart.length === 0) { alert("Your cart is empty!"); return; }
-    if (!user)             { alert("Please sign in first!"); return; }
+    if (cart.length === 0) { 
+      alert("Your cart is empty!");
+      return;
+    }
+    if (!user)             { 
+      alert("Please sign in first!"); 
+      return; 
+    }
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
+    navigator.geolocation.getCurrentPosition((pos) => {
         const lat     = pos.coords.latitude;
         const lng     = pos.coords.longitude;
         const mapUrl  = `https://www.google.com/maps?q=${lat},${lng}`;

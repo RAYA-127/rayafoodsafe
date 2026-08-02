@@ -5,7 +5,7 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzuNOEQ1PfE2ISH_yi_09QFtCmrWgaVa4d9HG3A0NniNKj8FvFD7xBaSajCuM6W7FS2/exec";
 
-  // Initialize user state
+// Initialize user state
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('raya_user');
     return savedUser ? JSON.parse(savedUser) : null;
@@ -23,7 +23,8 @@ export const CartProvider = ({ children }) => {
     return savedCoords ? JSON.parse(savedCoords) : null;
   });
 
-  // Keep a reference to the latest user to prevent stale dependency closures
+  // Keep a reference to the latest user 
+  // to prevent stale dependency closures
   const userRef = useRef(user);
   useEffect(() => {
     userRef.current = user;
@@ -42,6 +43,7 @@ export const CartProvider = ({ children }) => {
     }
   }, [user]);
 
+
   useEffect(() => {
     if (placedOrderCoordinates) {
       localStorage.setItem('active_order_coords', JSON.stringify(placedOrderCoordinates));
@@ -50,9 +52,11 @@ export const CartProvider = ({ children }) => {
     }
   }, [placedOrderCoordinates]);
 
+
   // Push updates to Google Sheets/Properties database
   const syncUserToCloud = async (email, fullProfileBundle) => {
-    if (!email) return;
+    if (!email) 
+      return;
     try {
       await fetch(WEB_APP_URL, {
         method: "POST",
@@ -73,13 +77,13 @@ export const CartProvider = ({ children }) => {
   // AUTOMATIC REAL-TIME CLOUD BACKUP: Triggers every time the cart or coords modify
   useEffect(() => {
     const currentUser = userRef.current;
-    if (currentUser && currentUser.email) {
+    if (currentUser && currentUser.email && currentUser.password) {
       const updatedProfileBundle = {
         ...currentUser,
         savedCart: cart,
         savedCoords: placedOrderCoordinates
       };
-      syncUserToCloud(currentUser.email, updatedProfileBundle);
+      syncUserToCloud(currentUser.email,currentUser.password , updatedProfileBundle);
     }
   }, [cart, placedOrderCoordinates]);
 
@@ -137,11 +141,13 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const clearCart = () => setCart([]);
+  const clearCart = () =>
+     setCart([]);
 
   const login = (userData) => {
     setUser(userData);
-    // If they already had items in their cart as a guest before logging in, preserve them up to the cloud bundle
+    // If they already had items in their cart as a guest before logging in,
+    // preserve them up to the cloud bundle
     const initialBundle = { 
       ...userData, 
       savedCart: cart, 
@@ -174,4 +180,4 @@ export const CartProvider = ({ children }) => {
 };
 
 export const useCart = () =>
-   useContext(CartContext); 
+   useContext(CartContext);   
