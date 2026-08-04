@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaUser, FaEnvelope, FaLock, FaHome } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaHome, FaPhone } from 'react-icons/fa';
 import { useCart } from '../AllComponents/UseContext/CartContext'; // Adjust path if needed
 
 const SigninPage = () => {
@@ -19,6 +19,7 @@ const SigninPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phoneno: '',
     password: ''
   });
 
@@ -29,29 +30,52 @@ const SigninPage = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Stop page reload
+ const handleSubmit = async (e) => {
+    e.preventDefault(); 
     
-    if (formData.name && formData.email && formData.password) {
+    if (formData.name && formData.email && formData.password && formData.phoneno) {
       setIsLoading(true);
       try {
-        // 1. Fetch persistent cross-device data (Cart history & Active tracks)
+        // 1. Force phone number into localStorage IMMEDIATELY before async calls
+        localStorage.setItem('user_phone', formData.phoneno.trim());
+        localStorage.setItem('raya_user_phone', formData.phoneno.trim());
+
+        // 2. Fetch cloud profile
         const cloudProfile = await handleUserDeviceLogin(formData.email);
         
-        if (cloudProfile) {
-          // Existing user with saved history found! Context automatically restores everything.
-          alert(`Welcome back to Raya Foods, ${cloudProfile.name || formData.name}! Your session and cart items have been completely restored.`);
-        } else {
-          // If they are an entirely new profile or had no previous database cloud record
-          const newLocalUserData = { 
-            name: formData.name, 
-            email: formData.email 
-          };
-          login(newLocalUserData); 
-          alert("Account initialized on new profile container!");
-        }
+        // 3. FORCE merge the phone number into the user profile object
+        const fullProfile = {
+          ...(cloudProfile || {}),
+          name: formData.name,
+          email: formData.email,
+          phoneno: formData.phoneno.trim(),
+          phone: formData.phoneno.trim(),
+          phoneNumber: formData.phoneno.trim()
+        };
+
+        // Save updated complete user profile back to LocalStorage
+        localStorage.setItem('user', JSON.stringify(fullProfile));
         
-        // 2. Send them to the homepage instantly
+        // Login to React Context
+        login(fullProfile); 
+
+        // 4. SYNC PHONE TO GOOGLE APPS SCRIPT CLOUD STORAGE
+        try {
+          fetch("https://script.google.com/macros/s/AKfycbxvFZnRm1pensNrFE_bjUFR_ADcGjQQn6lTIBwN512VDobr4bgXmQD36ei7kaEC0fcJ/exec", {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "syncUser",
+              email: formData.email,
+              profile: fullProfile
+            })
+          });
+        } catch(syncErr) {
+          console.log("Cloud sync notice:", syncErr);
+        }
+
+        alert(`Welcome back, ${formData.name}! Your account and phone details are synced.`);
         navigate('/Home');
       } catch (error) {
         console.error("Login process error:", error);
@@ -60,7 +84,7 @@ const SigninPage = () => {
         setIsLoading(false);
       }
     } else {
-      alert("Please fill in your details!");
+      alert("Please fill in all your details!");
     }
   };
 
@@ -85,6 +109,7 @@ const SigninPage = () => {
               <h1>Sign In</h1>
             </div>
 
+            {/* Name Input */}
             <div className="name">
               <label>Name : </label>
               <div className="input-wrapper">
@@ -100,6 +125,7 @@ const SigninPage = () => {
               </div>
             </div>
 
+            {/* Email Input */}
             <div className="email">
               <label>Email : </label>
               <div className="input-wrapper">
@@ -115,6 +141,26 @@ const SigninPage = () => {
               </div>
             </div>
 
+            {/* Phone Number Input */}
+            <div className="phone">
+              <label>Phone Number : </label>
+              <div className="input-wrapper">
+                <FaPhone className="input-icon" />
+                <input 
+                  type="tel" 
+                  placeholder='Phone Number'
+                  name="phoneno"
+                  value={formData.phoneno} 
+                  onChange={handleChange}
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  title="Please enter a valid 10-digit phone number"
+                  required 
+                />
+              </div>
+            </div>
+
+            {/* Password Input */}
             <div className="password">
               <label>Password : </label>
               <div className="input-wrapper">

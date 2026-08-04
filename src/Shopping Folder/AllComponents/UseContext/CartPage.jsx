@@ -11,27 +11,23 @@ const CartPage = () => {
   const { cart, addToCart, removeFromCart, user, clearCart } = useCart();
   const navigate = useNavigate(); 
 
-  // Multiple orders stored as array 
-  // persists in localStorage 
   const [activeOrders, setActiveOrders] = useState(() => {
     try {
       const saved = localStorage.getItem('raya_active_orders');
       return saved ? JSON.parse(saved) : [];
     } catch { 
       return [];
-    } //return empty array if any error occurs while fetching
+    }
   });
 
-  const baseWebUrl = "https://script.google.com/macros/s/AKfycbzuNOEQ1PfE2ISH_yi_09QFtCmrWgaVa4d9HG3A0NniNKj8FvFD7xBaSajCuM6W7FS2/exec";
+  const baseWebUrl = "https://script.google.com/macros/s/AKfycbxvFZnRm1pensNrFE_bjUFR_ADcGjQQn6lTIBwN512VDobr4bgXmQD36ei7kaEC0fcJ/exec";
 
-  // Save orders to localStorage whenever they change
   useEffect(() => {
     try {
       localStorage.setItem('raya_active_orders', JSON.stringify(activeOrders));
     } catch(e) {}
   }, [activeOrders]);
 
-  // ── Price helper ─────────────────────────────────────────────
   const getCleanPrice = (item) => {
     let raw = item.price;
     if (typeof raw === 'string') raw = raw.replace(/[^\d]/g, '');
@@ -45,35 +41,59 @@ const CartPage = () => {
     return n;
   };
 
-  const itemTotal   = cart.reduce((sum, item) => 
-    sum + getCleanPrice(item) * (item.quantity || 1), 0);
+  const itemTotal   = cart.reduce((sum, item) => sum + getCleanPrice(item) * (item.quantity || 1), 0);
   const deliveryFee = cart.length > 0 ? 5 : 0;
   const toPay       = itemTotal + deliveryFee;
 
-  // ── Place Order ──────────────────────────────────────────────
+  // ── AUTO-DETECT USER PHONE FROM ALL SIGN-IN / LOCALSTORAGE KEYS ──
+  const getAutoUserPhone = () => {
+    // 1. Direct Context check
+    if (user) {
+      const p = user.phone || user.phoneno || user.phoneNumber || user.phonenumber || user.mobile || user.contact || user.phone_number;
+      if (p && p !== "Not Provided") return p;
+    }
+
+    // 2. LocalStorage user object check
+    try {
+      const stored = JSON.parse(localStorage.getItem('user'));
+      if (stored) {
+        const p = stored.phone || stored.phoneno || stored.phoneNumber || stored.phonenumber || stored.mobile || stored.contact;
+        if (p && p !== "Not Provided") return p;
+      }
+    } catch (e) {}
+
+    // 3. Fallback to direct standalone localStorage keys
+    const directPhone = localStorage.getItem('user_phone') || localStorage.getItem('raya_user_phone') || localStorage.getItem('phone');
+    if (directPhone && directPhone !== "Not Provided") return directPhone;
+
+    return "Not Provided";
+  };
+
   const handlePlaceOrder = () => {
     if (cart.length === 0) { 
       alert("Your cart is empty!");
       return;
     }
-    if (!user)             { 
+    if (!user) { 
       alert("Please sign in first!"); 
       return; 
     }
+
+    const autoPhone = getAutoUserPhone();
 
     navigator.geolocation.getCurrentPosition((pos) => {
         const lat     = pos.coords.latitude;
         const lng     = pos.coords.longitude;
         const mapUrl  = `https://www.google.com/maps?q=${lat},${lng}`;
         const orderId = "RAYA-" + Date.now();
-        sendEmail(user.name, mapUrl, orderId, lat, lng);
+        
+        sendOrder(mapUrl, orderId, lat, lng, autoPhone);
       },
       () => alert("Please allow location access to place your order.")
     );
   };
 
-  const sendEmail = (customerName, mapUrl, orderId, lat, lng) => {
-    // Build order summary text for this order
+  const sendOrder = async (mapUrl, orderId, lat, lng, autoPhone) => {
     let orderText = "";
     cart.forEach(item => {
       const p = getCleanPrice(item);
@@ -87,28 +107,52 @@ const CartPage = () => {
     const takeUrlAdmin  = `${baseWebUrl}?orderId=${orderId}&driverEmail=${encodeURIComponent(adminEmail)}`;
     const takeUrlMember = `${baseWebUrl}?orderId=${orderId}&driverEmail=${encodeURIComponent(memberEmail)}`;
 
-    const params = {
-      order_id:      orderId,
+    const customerName = user?.name || user?.displayName || user?.username || "Guest Customer";
+    const userEmail    = user?.email || "Not Provided";
+
+    const payload = {
+      action: "createOrder",
+      order_id: orderId,
       customer_name: customerName,
+      customer_phone: autoPhone,
+      user_email: userEmail,
+      
+      // Multi-alias matching for EmailJS template tags
+      phone: autoPhone,
+      phone_number: autoPhone,
+      phoneno: autoPhone,
+
       order_details: orderText,
-      item_total:    itemTotal,
-      delivery_fee:  deliveryFee,
-      total_price:   toPay,
-      location_url:  mapUrl
+      item_total: itemTotal.toString(),
+      delivery_fee: deliveryFee.toString(),
+      total_price: toPay.toString(),
+      location_url: mapUrl
     };
 
+    // 1. Send Background Sync to Google Apps Script
+    try {
+      fetch(baseWebUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      }).catch(e => console.log("GAS Sync Notice:", e));
+    } catch(err) {
+      console.log("GAS Sync skipped:", err);
+    }
+
+    // 2. Dispatch Emails via EmailJS
     const SID = "service_29nizw2";
     const TID = "template_7zzckuz";
     const KEY = "iRFZFTg7KH47GGIWb";
 
     Promise.all([
-      emailjs.send(SID, TID, { ...params, take_order_link: takeUrlAdmin,  to_email: adminEmail  }, KEY),
-      emailjs.send(SID, TID, { ...params, take_order_link: takeUrlMember, to_email: memberEmail }, KEY)
+      emailjs.send(SID, TID, { ...payload, take_order_link: takeUrlAdmin, to_email: adminEmail }, KEY),
+      emailjs.send(SID, TID, { ...payload, take_order_link: takeUrlMember, to_email: memberEmail }, KEY)
     ])
     .then(() => {
       alert("✅ Order placed! Notifying Raya Foods team...");
 
-      // Add this new order to the list — previous orders stay!
       const newOrder = {
         orderId,
         lat,
@@ -118,26 +162,24 @@ const CartPage = () => {
           qty:  item.quantity || 1,
           price: getCleanPrice(item)
         })),
-        total:     toPay,
-        placedAt:  new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' }),
+        total: toPay,
+        placedAt: new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' }),
         delivered: false
       };
 
       setActiveOrders(prev => [...prev, newOrder]);
-      clearCart(); // Clear cart for next order
+      clearCart();
     })
     .catch(err => {
-      console.error(err);
-      alert("❌ Failed to send order. Please try again.");
+      console.error("EmailJS Error:", err);
+      alert("❌ Failed to send order email. Please try again.");
     });
   };
 
-  // ── Remove order when delivered ──────────────────────────────
   const handleOrderDelivered = (orderId) => {
     setActiveOrders(prev => prev.filter(o => o.orderId !== orderId));
   };
 
-  // ── Track order ──────────────────────────────────────────────
   const handleTrack = (order) => {
     navigate(`/track-order?lat=${order.lat}&lng=${order.lng}`,
       { state: { lat: order.lat, lng: order.lng } });
@@ -147,10 +189,8 @@ const CartPage = () => {
     <div className="checkout-page-container">
       <div className="checkout-content-wrapper">
 
-        {/* ── LEFT ── */}
+        {/* LEFT */}
         <div className="checkout-left-column">
-
-          {/* Account */}
           <div className={`checkout-step-card ${!user ? 'active-step' : 'completed-step'}`}>
             <div className="step-icon-badge"><FaUser /></div>
             <div className="step-details">
@@ -165,7 +205,6 @@ const CartPage = () => {
             </div>
           </div>
 
-          {/* Payment */}
           <div className={`checkout-step-card ${user ? 'active-step' : 'disabled-step'}`}>
             <div className="step-icon-badge"><FaWallet /></div>
             <div className="step-details">
@@ -180,7 +219,6 @@ const CartPage = () => {
                     </label>
                   </div>
 
-                  {/* Buy Now — always available for new orders */}
                   <button
                     className="buy-now-btn"
                     onClick={handlePlaceOrder}
@@ -196,10 +234,9 @@ const CartPage = () => {
             </div>
           </div>
 
-          {/* ── ALL ACTIVE ORDERS — each stays until delivered ── */}
           {activeOrders.length > 0 && (
             <div style={{ marginTop: '16px' }}>
-              <h3 style={{ fontSize:'15px', fontWeight:'600', marginBottom:'10px', color:'#ffffffff' }}>
+              <h3 style={{ fontSize:'15px', fontWeight:'600', marginBottom:'10px', color:'#ffffff' }}>
                 🛵 Your Active Orders ({activeOrders.length})
               </h3>
 
@@ -211,7 +248,6 @@ const CartPage = () => {
                   padding: '14px',
                   marginBottom: '14px'
                 }}>
-                  {/* Order header */}
                   <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
                     <div>
                       <span style={{ fontSize:'13px', fontWeight:'600', color:'#015d01' }}>
@@ -224,7 +260,6 @@ const CartPage = () => {
                     <span style={{ fontSize:'13px', fontWeight:'600' }}>₹{order.total}</span>
                   </div>
 
-                  {/* Items summary */}
                   <div style={{ fontSize:'12px', color:'#666', marginBottom:'10px', lineHeight:'1.8' }}>
                     {order.items.map((item, i) => (
                       <span key={i}>
@@ -234,10 +269,8 @@ const CartPage = () => {
                     ))}
                   </div>
 
-                  {/* Driver card — shows spinner until teammate accepts */}
                   <DriverStatusCard orderId={order.orderId} />
 
-                  {/* Track + Delivered buttons */}
                   <div style={{ display:'flex', gap:'8px', marginTop:'10px' }}>
                     <button
                       className="buy-now-btn"
@@ -259,10 +292,9 @@ const CartPage = () => {
               ))}
             </div>
           )}
-
         </div>
 
-        {/* ── RIGHT — Cart summary ── */}
+        {/* RIGHT */}
         <div className="checkout-right-column">
           <div className="order-summary-card">
             <div className="summary-header">
