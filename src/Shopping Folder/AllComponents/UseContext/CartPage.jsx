@@ -45,7 +45,7 @@ const CartPage = () => {
   const deliveryFee = cart.length > 0 ? 5 : 0;
   const toPay       = itemTotal + deliveryFee;
 
-  // ── AUTO-DETECT USER PHONE FROM ALL SIGN-IN / LOCALSTORAGE KEYS ──
+  // ── AUTO-DETECT USER PHONE FROM ALL SIGN-IN / LOCALSTORAGE KEYS ─
   const getAutoUserPhone = () => {
     // 1. Direct Context check
     if (user) {
